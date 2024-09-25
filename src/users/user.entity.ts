@@ -4,8 +4,10 @@ import {
   PrimaryGeneratedColumn,
   AfterInsert,
   AfterRemove,
-  AfterUpdate
+  AfterUpdate,
+  OneToMany,
 } from 'typeorm';
+import { Report } from '../reports/report.entity';
 //import { Exclude } from 'class-transformer';
 
 @Entity()
@@ -19,6 +21,12 @@ export class User {
   @Column()
   //@Exclude()
   password: string;
+
+  @Column({ default: true }) //need to change later
+  admin: boolean;
+
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Report [];
 
   @AfterInsert()
   logInsert() {
